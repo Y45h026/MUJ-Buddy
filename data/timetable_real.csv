@@ -1,0 +1,84 @@
+prof_email,day,course,start_time,end_time,location
+deepak.panwar@jaipur.manipal.edu,Monday,Artificial Intelligence,09:00,10:00,LHC Room 204
+deepak.panwar@jaipur.manipal.edu,Wednesday,Machine Learning,11:00,12:00,LHC Room 204
+
+gautam.kumar@jaipur.manipal.edu,Tuesday,Data Structures,10:00,11:30,LHC Room 312
+gautam.kumar@jaipur.manipal.edu,Thursday,Algorithms,14:00,15:30,LHC Room 312
+
+harish.shakya@jaipur.manipal.edu,Monday,Operating Systems,11:00,12:00,LHC Room 306A
+harish.shakya@jaipur.manipal.edu,Friday,OS Lab,14:00,16:00,LHC Lab 2
+
+amitkumar.bairwa@jaipur.manipal.edu,Tuesday,Database Systems,09:00,10:00,LHC Room 319C
+amitkumar.bairwa@jaipur.manipal.edu,Thursday,DBMS Lab,11:00,13:00,LHC Lab 3
+
+varun.tiwari@jaipur.manipal.edu,Monday,Computer Networks,14:00,15:00,LHC Room 319A
+varun.tiwari@jaipur.manipal.edu,Wednesday,Network Security,09:00,10:00,LHC Room 319A
+
+preeti.narooka@jaipur.manipal.edu,Wednesday,Software Engineering,10:00,11:00,LHC Room 314B
+preeti.narooka@jaipur.manipal.edu,Friday,Project Review,12:00,13:00,LHC Room 314B
+
+stuti.pandey@jaipur.manipal.edu,Tuesday,Python Programming,14:00,15:30,LHC Room 310
+stuti.pandey@jaipur.manipal.edu,Thursday,Python Lab,09:00,11:00,LHC Lab 1
+
+jaydeep.kishore@jaipur.manipal.edu,Monday,Theory of Computation,10:00,11:00,LHC Room 313
+jaydeep.kishore@jaipur.manipal.edu,Friday,Formal Languages,09:00,10:00,LHC Room 313
+
+anamika.dhillon@jaipur.manipal.edu,Tuesday,Discrete Mathematics,11:00,12:00,LHC Room 310
+anamika.dhillon@jaipur.manipal.edu,Thursday,Graph Theory,15:00,16:00,LHC Room 310
+
+harish.sharma@jaipur.manipal.edu,Monday,Project Mentoring,14:00,16:00,LHC Cabin 313
+harish.sharma@jaipur.manipal.edu,Wednesday,Placement Preparation,11:00,12:00,LHC Cabin 313
+
+uddalak.chatterjee@jaipur.manipal.edu,Tuesday,Compiler Design,09:00,10:00,LHC Room 301
+uddalak.chatterjee@jaipur.manipal.edu,Friday,Exam Coordination,11:00,12:00,LHC Room 301
+
+manish.rai@jaipur.manipal.edu,Wednesday,Quality Assurance,14:00,15:00,LHC Room 313
+manish.rai@jaipur.manipal.edu,Friday,Academic Audit,10:00,11:00,LHC Room 313
+
+siddharth.kumar@jaipur.manipal.edu,Monday,Data Analytics,09:00,10:00,LHC Room 301
+siddharth.kumar@jaipur.manipal.edu,Thursday,Analytics Lab,13:00,15:00,LHC Lab 4
+
+kanwalpreet.kour@jaipur.manipal.edu,Tuesday,Human Computer Interaction,15:00,16:00,LHC Room 310
+kanwalpreet.kour@jaipur.manipal.edu,Friday,UX Workshop,11:00,12:30,LHC Room 310
+
+shubh.agrwal@jaipur.manipal.edu,Monday,Web Technologies,10:00,11:00,AB1 FB-2 WS-33
+shubh.agrwal@jaipur.manipal.edu,Thursday,Web Lab,14:00,16:00,AB1 FB-2 WS-33
+
+sanjay.tehariya@jaipur.manipal.edu,Tuesday,Cloud Computing,13:00,14:00,AB1 FB-4 WS-30
+sanjay.tehariya@jaipur.manipal.edu,Friday,Cloud Lab,09:00,11:00,AB1 FB-4 WS-30
+
+sharma.rahul@jaipur.manipal.edu,Wednesday,Information Security,10:00,11:00,AB1 FB-4 WS-10
+sharma.rahul@jaipur.manipal.edu,Friday,Cyber Laws,14:00,15:00,AB1 FB-4 WS-10
+
+pankaj.upadhyay@jaipur.manipal.edu,Monday,Digital Logic Design,09:00,10:30,AB1 FB-4 WS-06
+pankaj.upadhyay@jaipur.manipal.edu,Thursday,Microcontrollers,11:00,12:30,AB1 FB-4 WS-06
+
+hemlata.parmar@jaipur.manipal.edu,Tuesday,Object Oriented Programming,10:00,11:30,AB1 FB-4 WS-05
+hemlata.parmar@jaipur.manipal.edu,Friday,OOP Lab,13:00,15:00,AB1 FB-4 WS-05
+
+surendra.solanki@jaipur.manipal.edu,Wednesday,Theory of Machines,14:00,15:00,AB1 FB-2 WS-09
+surendra.solanki@jaipur.manipal.edu,Friday,Mechanical Systems,10:00,11:00,AB1 FB-2 WS-09
+
+nikhil.pateria@jaipur.manipal.edu,Monday,Data Mining,11:00,12:00,AB1 FB-3 WS-01
+nikhil.pateria@jaipur.manipal.edu,Thursday,Mining Lab,15:00,17:00,AB1 FB-3 WS-01
+
+pranshu.pranjal@jaipur.manipal.edu,Tuesday,AI Ethics,09:00,10:00,AB1 FB-4 WS-15
+pranshu.pranjal@jaipur.manipal.edu,Friday,Seminar,12:00,13:00,AB1 FB-4 WS-15
+
+akanksha.mrinali@jaipur.manipal.edu,Wednesday,Technical Communication,11:00,12:00,AB1 FB-4 WS-13
+akanksha.mrinali@jaipur.manipal.edu,Friday,Presentation Skills,14:00,15:00,AB1 FB-4 WS-13
+
+sonia.choudhary@jaipur.manipal.edu,Tuesday,Professional Ethics,11:00,12:00,AB1 FB-4 WS-23
+sonia.choudhary@jaipur.manipal.edu,Thursday,Ethics Workshop,14:00,15:30,AB1 FB-4 WS-23
+
+noopur.tyagi@jaipur.manipal.edu,Monday,Software Testing,15:00,16:00,AB1 FB-4 WS-14
+noopur.tyagi@jaipur.manipal.edu,Wednesday,Automation Testing,09:00,10:00,AB1 FB-4 WS-14
+
+riya.kakkar@jaipur.manipal.edu,Tuesday,Machine Learning II,14:00,15:00,AB1 FB-5 WS-08
+riya.kakkar@jaipur.manipal.edu,Thursday,ML Lab,09:00,11:00,AB1 FB-5 WS-08
+
+shinnu@jaipur.manipal.edu,Monday,Deep Learning,11:00,12:00,AB1 FB-5 WS-06
+shinnu@jaipur.manipal.edu,Friday,DL Lab,14:00,16:00,AB1 FB-5 WS-06
+
+yadvendra.singh@jaipur.manipal.edu,Wednesday,Embedded Systems,10:00,11:30,2AB Lab 107
+yadvendra.singh@jaipur.manipal.edu,Friday,Embedded Lab,13:00,15:00,2AB Lab 107

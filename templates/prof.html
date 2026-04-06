@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+
+  <!-- Back Button -->
+  <a href="{{ url_for('index') }}" class="btn btn-outline-secondary mb-3">
+    <i class="fa-solid fa-arrow-left me-1"></i> Back to Search
+  </a>
+
+  <!-- Professor Info Card -->
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <div class="d-flex align-items-center mb-3">
+        <i class="fa-solid fa-user-tie fa-2x text-primary me-3"></i>
+        <div>
+          <h2 class="card-title text-primary fw-semibold mb-0">{{ prof.name }}</h2>
+          <small class="text-muted">{{ prof.department }}</small>
+        </div>
+      </div>
+
+      <div class="row text-muted">
+        <div class="col-md-6 mb-2">
+          <i class="fa-solid fa-envelope me-2 text-primary"></i>
+          <strong>Email:</strong> <a href="mailto:{{ prof.email }}" class="text-decoration-none">{{ prof.email }}</a>
+        </div>
+        <div class="col-md-6 mb-2">
+          <i class="fa-solid fa-phone me-2 text-primary"></i>
+          <strong>Phone:</strong> {{ prof.phone }}
+        </div>
+        <div class="col-md-6 mb-2">
+          <i class="fa-solid fa-building me-2 text-primary"></i>
+          <strong>Block:</strong> {{ prof.block }}
+        </div>
+        <div class="col-md-6 mb-2">
+          <i class="fa-solid fa-door-closed me-2 text-primary"></i>
+          <strong>Cabin:</strong> {{ prof.cabin }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Schedule Section -->
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h4 class="text-secondary mb-0">
+      <i class="fa-solid fa-calendar-day me-2 text-primary"></i>Schedule
+    </h4>
+
+    <!-- Day Selector -->
+    <form method="get" class="d-flex align-items-center">
+      <select id="day-select" class="form-select w-auto" onchange="changeDay(this.value)">
+        {% for d in day_names %}
+          <option value="{{ loop.index0 }}" {% if loop.index0 == selected_day_index %}selected{% endif %}>{{ d }}</option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
+
+  <!-- Classes -->
+  {% if classes %}
+    <div class="list-group mb-4">
+      {% for c in classes %}
+        <div class="list-group-item list-group-item-action border-0 shadow-sm mb-2 rounded-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="fw-semibold mb-1 text-dark">
+                <i class="fa-solid fa-book me-2 text-primary"></i>{{ c.course_name }}
+              </h6>
+              <small class="text-muted">
+                <i class="fa-regular fa-clock me-1"></i>{{ c.start_time }} - {{ c.end_time }}
+                &nbsp;•&nbsp;<i class="fa-solid fa-location-dot me-1"></i>{{ c.location }}
+              </small>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-success d-flex align-items-center">
+      <i class="fa-solid fa-check-circle me-2"></i>No classes today — professor might be free!
+    </div>
+  {% endif %}
+
+  <!-- Free Slots -->
+  <h4 class="text-secondary mb-3">
+    <i class="fa-regular fa-clock me-2 text-primary"></i>Suggested Free Slots
+  </h4>
+  {% if free_slots %}
+    <ul class="list-group">
+      {% for s in free_slots %}
+        <li class="list-group-item border-0 shadow-sm mb-2 rounded-3">
+          <i class="fa-regular fa-clock me-2 text-secondary"></i>{{ s[0] }} - {{ s[1] }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="alert alert-info d-flex align-items-center">
+      <i class="fa-solid fa-circle-info me-2"></i>No free slots found today.
+    </div>
+  {% endif %}
+</div>
+
+<!-- JavaScript for dropdown day change -->
+<script>
+  function changeDay(dayValue) {
+    const params = new URLSearchParams(window.location.search);
+    params.set('day', dayValue);
+    window.location.search = params.toString();
+  }
+</script>
+{% endblock %}

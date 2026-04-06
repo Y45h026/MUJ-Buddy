@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MUJ Buddy</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootswatch Theme (starts with Cosmo by default) -->
+    <link id="themeStylesheet" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/cosmo/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
+    <style>
+      body {
+        font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        background-color: #f8f9fa;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      nav.navbar {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        transition: background-color 0.3s ease;
+      }
+
+      .hero {
+        background: linear-gradient(90deg, rgba(13,110,253,0.08), rgba(13,110,253,0.03));
+        padding: 2rem 1.25rem;
+        border-radius: 12px;
+      }
+
+      .card-ghost {
+        border: 0;
+        box-shadow: 0 6px 24px rgba(17,24,39,0.04);
+      }
+
+      footer {
+        padding: 1.5rem 0;
+        border-top: 1px solid rgba(0,0,0,0.05);
+        margin-top: 3rem;
+        color: #6c757d;
+        transition: color 0.3s ease;
+      }
+
+      footer a {
+        color: #6c757d;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        color: #0d6efd;
+      }
+
+      .hover-shadow {
+        transition: all 0.2s ease;
+      }
+
+      .hover-shadow:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      #themeToggleBtn:hover {
+        box-shadow: 0 0 8px rgba(13, 110, 253, 0.5);
+      }
+    </style>
+
+    {% block head %}{% endblock %}
+  </head>
+
+  <body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
+          <i class="fa-solid fa-graduation-cap me-2"></i> MUJ Buddy
+        </a>
+
+        <div class="ms-auto d-flex align-items-center gap-2">
+          <button class="btn btn-outline-light btn-sm" id="themeToggleBtn">
+            <i class="fa-solid fa-moon me-1"></i> Dark Mode
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mt-4 mb-5">
+      {% block hero %}{% endblock %}
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center small">
+      <div class="container">
+        <p class="mb-0">© 2025 MUJ Buddy </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Dark / Light Mode Toggle -->
+    <script>
+      const themeLink = document.getElementById("themeStylesheet");
+      const toggleBtn = document.getElementById("themeToggleBtn");
+
+      const lightTheme = "https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/cosmo/bootstrap.min.css";
+      const darkTheme  = "https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/slate/bootstrap.min.css";
+
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        themeLink.href = darkTheme;
+        document.body.classList.add("bg-dark", "text-light");
+        toggleBtn.innerHTML = '<i class="fa-solid fa-sun me-1"></i> Light Mode';
+      }
+
+      toggleBtn.addEventListener("click", () => {
+        if (themeLink.href.includes("cosmo")) {
+          themeLink.href = darkTheme;
+          document.body.classList.add("bg-dark", "text-light");
+          toggleBtn.innerHTML = '<i class="fa-solid fa-sun me-1"></i> Light Mode';
+          localStorage.setItem("theme", "dark");
+        } else {
+          themeLink.href = lightTheme;
+          document.body.classList.remove("bg-dark", "text-light");
+          toggleBtn.innerHTML = '<i class="fa-solid fa-moon me-1"></i> Dark Mode';
+          localStorage.setItem("theme", "light");
+        }
+      });
+    </script>
+
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

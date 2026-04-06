@@ -1,0 +1,5 @@
+Flask==2.3.2
+SQLAlchemy==2.0.20
+Flask-SQLAlchemy==3.0.3
+python-dotenv==1.0.0
+pandas==2.1.1   # optional - useful for CSV imports
