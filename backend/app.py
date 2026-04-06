@@ -14,7 +14,7 @@ ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "admin123"
 
 app = Flask(__name__, template_folder="../templates", static_folder="../static")
-CORS(app)
+CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
 app.secret_key = "muj-buddy-secret-key"  # change in production
 
 # Absolute DB path
@@ -373,6 +373,152 @@ def get_professor(prof_id):
         "block": prof.block,
         "cabin": prof.cabin
     })
+
+# 1. JSON login — called by React admin modal
+@app.route("/api/admin/login", methods=["POST"])
+def api_admin_login():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+
+    username = data.get("username", "")
+    password = data.get("password", "")
+
+    if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+        session["admin_logged_in"] = True
+        return jsonify({"message": "Logged in successfully"})
+    else:
+        return jsonify({"error": "Invalid credentials"}), 401
+
+
+# 2. JSON logout — called by React admin dashboard
+@app.route("/api/admin/logout", methods=["POST"])
+def api_admin_logout():
+    session.clear()
+    return jsonify({"message": "Logged out"})
+
+
+# 3. Auth check — called by AdminDashboard on mount to guard the route
+@app.route("/api/admin/me")
+def api_admin_me():
+    if session.get("admin_logged_in"):
+        return jsonify({"admin": True})
+    return jsonify({"error": "Unauthorized"}), 401
+
+
+# 4. JSON professor upload — called by React upload card
+@app.route("/api/admin/upload/professors", methods=["POST"])
+def api_admin_upload_professors():
+    if not session.get("admin_logged_in"):
+        return jsonify({"error": "Unauthorized"}), 401
+
+    file = request.files.get("file")
+    if not file:
+        return jsonify({"error": "No file provided"}), 400
+
+    content = file.stream.read().decode("utf-8-sig").splitlines()
+    reader = csv.DictReader(content)
+    rows = list(reader)
+
+    required_fields = {"name", "department", "email", "phone", "block", "cabin"}
+    errors = []
+
+    if not rows:
+        return jsonify({"error": "CSV is empty"}), 400
+
+    if not required_fields.issubset(set(reader.fieldnames or [])):
+        missing = required_fields - set(reader.fieldnames or [])
+        return jsonify({"error": f"Missing columns: {missing}"}), 400
+
+    seen_emails = set()
+    for idx, row in enumerate(rows, start=2):
+        email = row["email"].strip().lower()
+        if not EMAIL_REGEX.match(email):
+            errors.append(f"Row {idx}: Invalid email format")
+        if email in seen_emails:
+            errors.append(f"Row {idx}: Duplicate email in CSV")
+        seen_emails.add(email)
+        for field in required_fields:
+            if not row[field].strip():
+                errors.append(f"Row {idx}: '{field}' cannot be empty")
+
+    if errors:
+        return jsonify({"message": "Validation failed", "errors": errors}), 422
+
+    Professor.query.delete()
+    db.session.commit()
+    for row in rows:
+        db.session.add(Professor(
+            name=row["name"].strip(),
+            department=row["department"].strip(),
+            email=row["email"].strip().lower(),
+            phone=row["phone"].strip(),
+            block=row["block"].strip(),
+            cabin=row["cabin"].strip(),
+            notes=None
+        ))
+    db.session.commit()
+    return jsonify({"message": f"✅ {len(rows)} professors uploaded successfully!"})
+
+
+# 5. JSON timetable upload — called by React upload card
+@app.route("/api/admin/upload/timetable", methods=["POST"])
+def api_admin_upload_timetable():
+    if not session.get("admin_logged_in"):
+        return jsonify({"error": "Unauthorized"}), 401
+
+    file = request.files.get("file")
+    if not file:
+        return jsonify({"error": "No file provided"}), 400
+
+    content = file.stream.read().decode("utf-8-sig").splitlines()
+    reader = csv.DictReader(content)
+    rows = list(reader)
+
+    required_fields = {"prof_email", "day", "course", "start_time", "end_time", "location"}
+    errors = []
+
+    DAY_MAP = {"Monday": 0, "Tuesday": 1, "Wednesday": 2,
+               "Thursday": 3, "Friday": 4, "Saturday": 5, "Sunday": 6}
+
+    if not rows:
+        return jsonify({"error": "CSV is empty"}), 400
+
+    if not required_fields.issubset(set(reader.fieldnames or [])):
+        missing = required_fields - set(reader.fieldnames or [])
+        return jsonify({"error": f"Missing columns: {missing}"}), 400
+
+    for idx, row in enumerate(rows, start=2):
+        email = row["prof_email"].strip().lower()
+        if not EMAIL_REGEX.match(email):
+            errors.append(f"Row {idx}: Invalid professor email")
+        if row["day"] not in VALID_DAYS:
+            errors.append(f"Row {idx}: Invalid day '{row['day']}'")
+        if not validate_time(row["start_time"]) or not validate_time(row["end_time"]):
+            errors.append(f"Row {idx}: Invalid time format (HH:MM required)")
+        if row["start_time"] >= row["end_time"]:
+            errors.append(f"Row {idx}: Start time must be before end time")
+        if not Professor.query.filter_by(email=email).first():
+            errors.append(f"Row {idx}: Professor email not found in database")
+
+    if errors:
+        return jsonify({"message": "Validation failed", "errors": errors}), 422
+
+    Timetable.query.delete()
+    db.session.commit()
+    for row in rows:
+        prof = Professor.query.filter_by(email=row["prof_email"].strip().lower()).first()
+        db.session.add(Timetable(
+            prof_id=prof.id,
+            day_of_week=DAY_MAP[row["day"]],
+            course_name=row["course"].strip(),
+            start_time=row["start_time"].strip(),
+            end_time=row["end_time"].strip(),
+            location=row["location"].strip()
+        ))
+    db.session.commit()
+    return jsonify({"message": f"✅ {len(rows)} timetable entries uploaded successfully!"})
+
 
 if __name__ == "__main__":
     with app.app_context():
